@@ -21,14 +21,14 @@ class SecScreen extends StatelessWidget {
         children: [
           BlocConsumer<CounterCubit, CounterState>(
             listener: (context, state) {
-              if (state.Isadded == true)
+              if (state.wasIncremented == true)
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text("nice"),
                     duration: Duration(milliseconds: 300),
                   ),
                 );
-              if (state.Isadded == false)
+              if (state.wasIncremented == false)
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text("bad"),
@@ -45,13 +45,13 @@ class SecScreen extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  BlocProvider.of<CounterCubit>(context).remove();
+                  BlocProvider.of<CounterCubit>(context).decrement();
                 },
                 child: (Text("rrr")),
               ),
               ElevatedButton(
                 onPressed: () {
-                  BlocProvider.of<CounterCubit>(context).add();
+                  BlocProvider.of<CounterCubit>(context).increment();
                 },
                 child: Text("aaa"),
               )
