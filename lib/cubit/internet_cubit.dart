@@ -14,12 +14,20 @@ class InternetCubit extends Cubit<InternetState> {
     connectivity.onConnectivityChanged.listen(
       (Result) {
         if (Result == ConnectionTypes.wifi) {
-          ConnectToInternet(ConnectionTypes.wifi);
+          print("wifi");
+
+          return ConnectToInternet(ConnectionTypes.wifi);
         } else if (Result == ConnectionTypes.mobile) {
-          ConnectToInternet(ConnectionTypes.mobile);
+          print("mobile");
+
+          return ConnectToInternet(ConnectionTypes.mobile);
         } else if (Result == ConnectionTypes.noConnection) {
-          ConnectToInternet(ConnectionTypes.noConnection);
+          print("noConnection");
+
+          return ConnectToInternet(ConnectionTypes.noConnection);
         } else {
+          print("cantread");
+
           return ConnectToInternet(ConnectionTypes.cantread);
         }
       },

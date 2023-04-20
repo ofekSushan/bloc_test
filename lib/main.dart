@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bloc_test/cubit/english_cubit.dart';
 import 'package:bloc_test/cubit/internet_cubit.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
@@ -26,9 +27,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         BlocProvider<InternetCubit>(
-          create: (context) => InternetCubit(connectivity: connection),
+          create: (_) => InternetCubit(connectivity: connection),
         ),
         BlocProvider<CounterCubit>(create: (context) => CounterCubit()),
+        BlocProvider<EnglishCubit>(create: (context) => EnglishCubit()),
       ],
       child: App(),
     );

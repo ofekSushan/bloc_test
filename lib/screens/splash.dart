@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bloc_test/cubit/english_cubit.dart';
 import 'package:bloc_test/globals/enum/enum.dart';
 import 'package:bloc_test/screens/secScreen.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +49,17 @@ class _SplashState extends State<Splash> {
                   : state.counterValue.toString());
             },
           ),
+          Builder(builder: (context) {
+            final counterstate = context.watch<CounterCubit>().state;
+            final englishstate = context.watch<EnglishCubit>().state;
+
+            return Text('test     ' +
+                counterstate.counterValue.toString() +
+                "    english     " +
+                String.fromCharCode(
+                  englishstate.englishValue,
+                ));
+          }),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -62,6 +74,23 @@ class _SplashState extends State<Splash> {
                   BlocProvider.of<CounterCubit>(context).increment();
                 },
                 child: Text("add"),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  BlocProvider.of<EnglishCubit>(context).decrement();
+                },
+                child: (Text("english remove")),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  BlocProvider.of<EnglishCubit>(context).increment();
+                },
+                child: Text("english add"),
               )
             ],
           ),
@@ -70,28 +99,28 @@ class _SplashState extends State<Splash> {
                 Navigator.of(context).pushNamed(SecScreen.routeName),
             child: Text("data"),
           ),
-          BlocBuilder<InternetCubit, InternetState>(
-            builder: (context, state) {
-              if (state is InternetConnection) {
-                print('${state.type}+"ofek"');
-              }
-              if (state is InternetConnection &&
-                  state.type == ConnectionTypes.wifi) {
-                return Text("wifi");
-              } else if (state is InternetConnection &&
-                  state.type == ConnectionTypes.mobile) {
-                return Text("mobile");
-              } else if (state is InternetConnection &&
-                  state.type == ConnectionTypes.noConnection) {
-                return Text("no");
-              } else if (state is InternetConnection &&
-                  state.type == ConnectionTypes.cantread) {
-                return Text("cant read");
-              }
+          // BlocBuilder<InternetCubit, InternetState>(
+          //   builder: (context, state) {
+          //     if (state is InternetConnection) {
+          //       print('${state.type}+"ofek"');
+          //     }
+          //     if (state is InternetConnection &&
+          //         state.type == ConnectionTypes.wifi) {
+          //       return Text("wifi");
+          //     } else if (state is InternetConnection &&
+          //         state.type == ConnectionTypes.mobile) {
+          //       return Text("mobile");
+          //     } else if (state is InternetConnection &&
+          //         state.type == ConnectionTypes.noConnection) {
+          //       return Text("no");
+          //     } else if (state is InternetConnection &&
+          //         state.type == ConnectionTypes.cantread) {
+          //       return Text("cant read");
+          //     }
 
-              return Container();
-            },
-          )
+          //     return Container();
+          //   },
+          // )
         ],
       ),
     );
