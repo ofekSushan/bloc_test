@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_bloc: ^8.1.2
   connectivity_plus: ^3.0.4
+  hydrated_bloc: ^9.1.0
+  path_provider: ^2.0.14
 
 
 dev_dependencies:
