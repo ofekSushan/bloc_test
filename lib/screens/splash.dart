@@ -4,6 +4,7 @@ import 'package:bloc_test/cubit/english_cubit.dart';
 import 'package:bloc_test/globals/enum/enum.dart';
 import 'package:bloc_test/screens/secScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,6 +21,8 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
+  final textController = TextEditingController(text: "");
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,10 +97,33 @@ class _SplashState extends State<Splash> {
               )
             ],
           ),
+          SizedBox(
+            width: 200,
+            child: TextField(
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]+')),
+              ],
+              controller: textController,
+              maxLength: 1,
+              style: TextStyle(
+                fontSize: 14,
+              ),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'new english letter',
+              ),
+            ),
+          ),
+          TextButton(
+              child: Text("confirm letter"),
+              onPressed: () {
+                BlocProvider.of<EnglishCubit>(context)
+                    .ChangeLetter(textController.text.codeUnitAt(0));
+              }),
           TextButton(
             onPressed: () =>
                 Navigator.of(context).pushNamed(SecScreen.routeName),
-            child: Text("data"),
+            child: Text("next screen"),
           ),
           // BlocBuilder<InternetCubit, InternetState>(
           //   builder: (context, state) {
