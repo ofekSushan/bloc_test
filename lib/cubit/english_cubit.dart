@@ -1,16 +1,25 @@
-import 'dart:ffi';
+import 'dart:convert';
 
-import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'english_state.dart';
 
-class EnglishCubit extends Cubit<EnglishState> {
+class EnglishCubit extends Cubit<EnglishState> with HydratedMixin {
   EnglishCubit() : super(EnglishState(englishValue: "a".codeUnits.first));
 
-  void ChangeLetter(var Letter) => emit(EnglishState(englishValue: Letter));
+  void ChangeLetter(dynamic Letter) => emit(EnglishState(englishValue: Letter));
 
   void increment() => emit(EnglishState(englishValue: state.englishValue + 1));
 
   void decrement() => emit(EnglishState(englishValue: state.englishValue - 1));
+
+  @override
+  EnglishState? fromJson(Map<String, dynamic> json) {
+    return EnglishState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(EnglishState state) {
+    return state.toMap();
+  }
 }

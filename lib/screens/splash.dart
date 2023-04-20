@@ -1,20 +1,17 @@
-import 'dart:async';
-
-import 'package:bloc_test/cubit/english_cubit.dart';
-import 'package:bloc_test/globals/enum/enum.dart';
-import 'package:bloc_test/screens/secScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../cubit/counter_cubit.dart';
-import '../cubit/internet_cubit.dart';
+import '../cubit/english_cubit.dart';
+import 'secScreen.dart';
 
 class Splash extends StatefulWidget {
   const Splash({
     super.key,
   });
+
+  confirmLetter(context, TextEditingController textController) {}
 
   @override
   State<Splash> createState() => _SplashState();
@@ -56,9 +53,9 @@ class _SplashState extends State<Splash> {
             final counterstate = context.watch<CounterCubit>().state;
             final englishstate = context.watch<EnglishCubit>().state;
 
-            return Text('test     ' +
+            return Text('counterValue     ' +
                 counterstate.counterValue.toString() +
-                "    english     " +
+                "    englishValue     " +
                 String.fromCharCode(
                   englishstate.englishValue,
                 ));
@@ -104,6 +101,7 @@ class _SplashState extends State<Splash> {
                 FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]+')),
               ],
               controller: textController,
+              onEditingComplete: () => confirmLetter(context, textController),
               maxLength: 1,
               style: TextStyle(
                 fontSize: 14,
@@ -116,10 +114,7 @@ class _SplashState extends State<Splash> {
           ),
           TextButton(
               child: Text("confirm letter"),
-              onPressed: () {
-                BlocProvider.of<EnglishCubit>(context)
-                    .ChangeLetter(textController.text.codeUnitAt(0));
-              }),
+              onPressed: () => confirmLetter(context, textController)),
           TextButton(
             onPressed: () =>
                 Navigator.of(context).pushNamed(SecScreen.routeName),
@@ -151,4 +146,10 @@ class _SplashState extends State<Splash> {
       ),
     );
   }
+}
+
+confirmLetter(BuildContext context, TextEditingController textController) {
+  BlocProvider.of<EnglishCubit>(context)
+      .ChangeLetter(textController.text.codeUnitAt(0));
+  textController.text = "";
 }

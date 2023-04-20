@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:bloc_test/globals/enum/enum.dart';
-import 'package:meta/meta.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:meta/meta.dart';
+
+import '../globals/enum/enum.dart';
 
 part 'internet_state.dart';
 
